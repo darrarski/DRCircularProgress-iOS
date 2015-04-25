@@ -38,14 +38,14 @@
     CGFloat progressAngle = -self.progressValue * 360.f + 90.f;
 
     [self drawOvalInRect:rect
-              startAngle:-progressAngle
-                endAngle:270.f
+              startAngle:-90.f
+                endAngle:-progressAngle
                thicsness:self.thickness
                    color:self.progressColor];
 
     [self drawOvalInRect:rect
-              startAngle:-90.f
-                endAngle:-progressAngle
+              startAngle:-progressAngle
+                endAngle:270.f
                thicsness:self.thickness
                    color:self.alternativeColor];
 }
