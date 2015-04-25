@@ -10,6 +10,7 @@
 		31809ABD1AEBD8800051D6EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 31809ABC1AEBD8800051D6EB /* main.m */; };
 		9DA8A0B7E6433F50D8750485 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8AF88D99069BA66D9335E /* AppDelegate.m */; };
 		9DA8A57A4BA90A1DA3478B59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DA8ADA0102E1D83A5736BD4 /* Main.storyboard */; };
+		9DA8A62CEB6F5E67DADB7DF3 /* DRCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8A5117C4608FCD3DCC7E0 /* DRCircularProgressView.m */; };
 		9DA8A9E7B880AE44BAAB9A0A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DA8A74B4B6329E37C18D99A /* LaunchScreen.xib */; };
 		9DA8ADD4E6C00AABE47A29B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DA8A6794B0ECEC3D3DBDD22 /* Images.xcassets */; };
 		9DA8AEFD356768635DF9963E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8AA8F392632FA188BD9CC /* ViewController.m */; };
@@ -20,10 +21,12 @@
 		31809ABB1AEBD8800051D6EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		31809ABC1AEBD8800051D6EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9DA8A00535A1D778686331D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9DA8A5117C4608FCD3DCC7E0 /* DRCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRCircularProgressView.m; sourceTree = "<group>"; };
 		9DA8A534FE18697CE68275A7 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9DA8A6794B0ECEC3D3DBDD22 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9DA8A8E3D6C5B1B06BF2B2F1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9DA8AA8F392632FA188BD9CC /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9DA8AE19F04CAB4A51D6F4CC /* DRCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRCircularProgressView.h; sourceTree = "<group>"; };
 		9DA8AF05962379BAEF8C8285 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9DA8AF88D99069BA66D9335E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +82,8 @@
 		31809AE01AEBD9B30051D6EB /* DRCircularProgress */ = {
 			isa = PBXGroup;
 			children = (
+				9DA8AE19F04CAB4A51D6F4CC /* DRCircularProgressView.h */,
+				9DA8A5117C4608FCD3DCC7E0 /* DRCircularProgressView.m */,
 			);
 			path = DRCircularProgress;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 				31809ABD1AEBD8800051D6EB /* main.m in Sources */,
 				9DA8A0B7E6433F50D8750485 /* AppDelegate.m in Sources */,
 				9DA8AEFD356768635DF9963E /* ViewController.m in Sources */,
+				9DA8A62CEB6F5E67DADB7DF3 /* DRCircularProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
