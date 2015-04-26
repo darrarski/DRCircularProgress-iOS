@@ -24,10 +24,11 @@ Check out included example project.
 
 ## Changelog
 
-##### v1.0.0
+##### v0.1.0
 
 > - Initial release
 > - iOS 7 and iOS 8 compatible
+> - Supports animated progress change
 
 ## License
 
