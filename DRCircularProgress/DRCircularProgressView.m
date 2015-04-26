@@ -81,7 +81,7 @@
             CGFloat currentProgress = self.progressValue;
             CGFloat targetProgress = [[layer valueForKey:@"progressValue"] floatValue];
 
-            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
             animation.fromValue = @(currentProgress);
             animation.toValue = @(targetProgress);
 
