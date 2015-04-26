@@ -47,9 +47,7 @@
 - (void)setProgressValue:(CGFloat)progressValue
 {
     _progressValue = progressValue;
-    self.progressOvalLayer.strokeEnd = MIN(1, MAX(0, progressValue));
-    self.backgroundOvalLayer.strokeEnd = MIN(1, MAX(0, 1 - progressValue));
-    [self.layer setValue:@(progressValue) forKey:@"progressValue"];
+    [self.layer setValue:@(progressValue) forKey:NSStringFromSelector(@selector(progressValue))];
 }
 
 - (void)setProgressColor:(UIColor *)progressColor
@@ -75,28 +73,39 @@
 
 - (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)key
 {
-    if ([key isEqualToString:@"progressValue"]) {
+    if ([key isEqualToString:NSStringFromSelector(@selector(progressValue))]) {
         CAAnimation *action = (CAAnimation *)[self actionForLayer:layer forKey:@"backgroundColor"];
         if (![action isKindOfClass:[NSNull class]]) {
-            CGFloat currentProgress = self.progressValue;
-            CGFloat targetProgress = [[layer valueForKey:@"progressValue"] floatValue];
+            CGFloat currentProgress = [[layer valueForKey:NSStringFromSelector(@selector(progressValue))] floatValue];
+            CGFloat targetProgress = self.progressValue;
 
-            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-            animation.fromValue = @(currentProgress);
-            animation.toValue = @(targetProgress);
+            CABasicAnimation *progressOvalAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+            progressOvalAnimation.fromValue = @([[self class] progressOvalStokeEndForProgress:currentProgress]);
+            progressOvalAnimation.toValue = @([[self class] progressOvalStokeEndForProgress:targetProgress]);
 
-            animation.beginTime = action.beginTime;
-            animation.duration = action.duration;
-            animation.speed = action.speed;
-            animation.timeOffset = action.timeOffset;
-            animation.repeatCount = action.repeatCount;
-            animation.repeatDuration = action.repeatDuration;
-            animation.autoreverses = action.autoreverses;
-            animation.fillMode = action.fillMode;
-            animation.timingFunction = action.timingFunction;
-            animation.delegate = action.delegate;
+            CABasicAnimation *backgroundOvalAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+            backgroundOvalAnimation.fromValue = @([[self class] backgroundOvalStrokeEndForProgress:currentProgress]);
+            backgroundOvalAnimation.toValue = @([[self class] backgroundOvalStrokeEndForProgress:targetProgress]);
 
-            return animation;
+            for (CABasicAnimation *animation in @[progressOvalAnimation, backgroundOvalAnimation]) {
+                animation.beginTime = action.beginTime;
+                animation.duration = action.duration;
+                animation.speed = action.speed;
+                animation.timeOffset = action.timeOffset;
+                animation.repeatCount = action.repeatCount;
+                animation.repeatDuration = action.repeatDuration;
+                animation.autoreverses = action.autoreverses;
+                animation.fillMode = action.fillMode;
+                animation.timingFunction = action.timingFunction;
+                animation.delegate = action.delegate;
+            }
+
+            [self.progressOvalLayer addAnimation:progressOvalAnimation forKey:@"strokeEnd"];
+            [self.backgroundOvalLayer addAnimation:backgroundOvalAnimation forKey:@"strokeEnd"];
+        }
+        else {
+            self.progressOvalLayer.strokeEnd = [[self class] progressOvalStokeEndForProgress:self.progressValue];
+            self.backgroundOvalLayer.strokeEnd = [[self class] backgroundOvalStrokeEndForProgress:self.progressValue];
         }
     }
     return [super actionForLayer:layer forKey:key];
@@ -117,7 +126,7 @@
                                          endAngle:-90
                                         clockwise:NO].CGPath;
         layer.strokeStart = 0;
-        layer.strokeEnd = MIN(1, MAX(0, 1 - self.progressValue));
+        layer.strokeEnd = [[self class] backgroundOvalStrokeEndForProgress:self.progressValue];
         [self.layer addSublayer:layer];
         _backgroundOvalLayer = layer;
     }
@@ -137,7 +146,7 @@
                                          endAngle:270
                                         clockwise:YES].CGPath;
         layer.strokeStart = 0;
-        layer.strokeEnd = MIN(1, MAX(0, self.progressValue));
+        layer.strokeEnd = [[self class] progressOvalStokeEndForProgress:self.progressValue];
         [self.layer addSublayer:layer];
         _progressOvalLayer = layer;
     }
@@ -159,6 +168,16 @@
         [ovalPath applyTransform:ovalTransform];
     }
     return ovalPath;
+}
+
++ (CGFloat)progressOvalStokeEndForProgress:(CGFloat)progressValue
+{
+    return progressValue;
+}
+
++ (CGFloat)backgroundOvalStrokeEndForProgress:(CGFloat)progressValue
+{
+    return 1 - progressValue;
 }
 
 @end
