@@ -52,13 +52,19 @@
 
 - (void)drawOvalInRect:(CGRect)rect startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle thicsness:(CGFloat)thickness color:(UIColor *)color
 {
+    BOOL isCircle = rect.size.width == rect.size.height;
     CGRect ovalRect = CGRectInset(rect, thickness / 2.f, thickness / 2.f);
     UIBezierPath *ovalPath = [UIBezierPath bezierPath];
-    [ovalPath addArcWithCenter:CGPointMake(CGRectGetMidX(ovalRect), CGRectGetMidY(ovalRect))
+    [ovalPath addArcWithCenter:isCircle ? CGPointMake(CGRectGetMidX(ovalRect), CGRectGetMidY(ovalRect)) : CGPointZero
                         radius:CGRectGetWidth(ovalRect) / 2.f
                     startAngle:startAngle * (CGFloat) M_PI / 180.f
                       endAngle:endAngle * (CGFloat) M_PI / 180.f
                      clockwise:YES];
+    if (!isCircle) {
+        CGAffineTransform ovalTransform = CGAffineTransformMakeTranslation(CGRectGetMidX(rect), CGRectGetMidY(rect));
+        ovalTransform = CGAffineTransformScale(ovalTransform, 1, CGRectGetHeight(ovalRect) / CGRectGetWidth(ovalRect));
+        [ovalPath applyTransform:ovalTransform];
+    }
     [color setStroke];
     ovalPath.lineWidth = thickness;
     [ovalPath stroke];
