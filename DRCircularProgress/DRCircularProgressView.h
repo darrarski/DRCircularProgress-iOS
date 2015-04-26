@@ -5,11 +5,12 @@
 
 #import <UIKit/UIKit.h>
 
+IB_DESIGNABLE
 @interface DRCircularProgressView : UIView
 
-@property (nonatomic, assign) CGFloat progressValue;
-@property (nonatomic, strong) UIColor *progressColor;
-@property (nonatomic, strong) UIColor *alternativeColor;
-@property (nonatomic, assign) CGFloat thickness;
+@property (nonatomic, assign) IBInspectable CGFloat progressValue;
+@property (nonatomic, strong) IBInspectable UIColor *progressColor;
+@property (nonatomic, strong) IBInspectable UIColor *alternativeColor;
+@property (nonatomic, assign) IBInspectable CGFloat thickness;
 
 @end
