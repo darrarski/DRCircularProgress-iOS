@@ -29,20 +29,16 @@
 
 - (void)animateProgress
 {
-    __block NSDate *date = [NSDate date];
     [UIView animateWithDuration:3
                      animations:^{
                          self.progressView.progressValue = 1.f;
                      }
                      completion:^(BOOL finished1) {
-                         NSLog(@"first animation completed in %f", [[NSDate date] timeIntervalSinceDate:date]);
-                         date = [NSDate date];
                          [UIView animateWithDuration:3
                                           animations:^{
                                               self.progressView.progressValue = 0.f;
                                           }
                                           completion:^(BOOL finished2) {
-                                              NSLog(@"second animation completed in %f", [[NSDate date] timeIntervalSinceDate:date]);
                                               [self animateProgress];
                                           }];
                      }];
