@@ -49,6 +49,7 @@
     _progressValue = progressValue;
     self.progressOvalLayer.strokeEnd = MIN(1, MAX(0, progressValue));
     self.backgroundOvalLayer.strokeEnd = MIN(1, MAX(0, 1 - progressValue));
+    [self.layer setValue:@(progressValue) forKey:@"progressValue"];
 }
 
 - (void)setProgressColor:(UIColor *)progressColor
@@ -68,6 +69,37 @@
     _thickness = thickness;
     self.progressOvalLayer.lineWidth = thickness;
     self.backgroundOvalLayer.lineWidth = thickness;
+}
+
+#pragma mark - CoreAnimation
+
+- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)key
+{
+    if ([key isEqualToString:@"progressValue"]) {
+        CAAnimation *action = (CAAnimation *)[self actionForLayer:layer forKey:@"backgroundColor"];
+        if (![action isKindOfClass:[NSNull class]]) {
+            CGFloat currentProgress = self.progressValue;
+            CGFloat targetProgress = [[layer valueForKey:@"progressValue"] floatValue];
+
+            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+            animation.fromValue = @(currentProgress);
+            animation.toValue = @(targetProgress);
+
+            animation.beginTime = action.beginTime;
+            animation.duration = action.duration;
+            animation.speed = action.speed;
+            animation.timeOffset = action.timeOffset;
+            animation.repeatCount = action.repeatCount;
+            animation.repeatDuration = action.repeatDuration;
+            animation.autoreverses = action.autoreverses;
+            animation.fillMode = action.fillMode;
+            animation.timingFunction = action.timingFunction;
+            animation.delegate = action.delegate;
+
+            return animation;
+        }
+    }
+    return [super actionForLayer:layer forKey:key];
 }
 
 #pragma mark - Internals
