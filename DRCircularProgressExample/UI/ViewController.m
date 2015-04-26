@@ -18,7 +18,30 @@
 {
     [super viewDidLoad];
 
-    self.progressView.progressValue = 0.667f;
+    self.progressView.progressValue = 0.f;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self animateProgress];
+}
+
+- (void)animateProgress
+{
+    [UIView animateWithDuration:3
+                     animations:^{
+                         self.progressView.progressValue = 1.f;
+                     }
+                     completion:^(BOOL finished1) {
+                         [UIView animateWithDuration:3
+                                          animations:^{
+                                              self.progressView.progressValue = 0.f;
+                                          }
+                                          completion:^(BOOL finished2) {
+                                              [self animateProgress];
+                                          }];
+                     }];
 }
 
 @end
