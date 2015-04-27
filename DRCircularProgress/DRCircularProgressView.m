@@ -41,8 +41,11 @@
     _startAngle = -90;
     _endAngle = 270;
     _clockwise = YES;
+
+#if !TARGET_INTERFACE_BUILDER
     [self progressOvalLayer];
     [self backgroundOvalLayer];
+#endif
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer
@@ -141,6 +144,17 @@
 }
 
 #pragma mark - Internals
+
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+
+#if TARGET_INTERFACE_BUILDER
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [self.backgroundOvalLayer drawInContext:ctx];
+    [self.progressOvalLayer drawInContext:ctx];
+#endif
+}
 
 - (void)updateOvalPaths
 {
