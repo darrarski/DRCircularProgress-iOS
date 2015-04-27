@@ -12,5 +12,8 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor *progressColor;
 @property (nonatomic, strong) IBInspectable UIColor *alternativeColor;
 @property (nonatomic, assign) IBInspectable CGFloat thickness;
+@property (nonatomic, assign) IBInspectable CGFloat startAngle;
+@property (nonatomic, assign) IBInspectable CGFloat endAngle;
+@property (nonatomic, assign) IBInspectable BOOL clockwise;
 
 @end

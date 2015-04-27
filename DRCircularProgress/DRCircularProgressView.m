@@ -38,6 +38,9 @@
     _progressColor = [UIColor blueColor];
     _alternativeColor = [UIColor lightGrayColor];
     _thickness = 10.f;
+    _startAngle = -90;
+    _endAngle = 270;
+    _clockwise = YES;
     [self progressOvalLayer];
     [self backgroundOvalLayer];
 }
@@ -46,8 +49,7 @@
 {
     [super layoutSublayersOfLayer:layer];
     if ([layer isEqual:self.layer]) {
-        self.progressOvalLayer.path = [self progressOvalLayerPath];
-        self.backgroundOvalLayer.path = [self backgroundOvalLayerPath];
+        [self updateOvalPaths];
     }
 }
 
@@ -76,6 +78,24 @@
     _thickness = thickness;
     self.progressOvalLayer.lineWidth = thickness;
     self.backgroundOvalLayer.lineWidth = thickness;
+}
+
+- (void)setStartAngle:(CGFloat)startAngle
+{
+    _startAngle = startAngle;
+    [self updateOvalPaths];
+}
+
+- (void)setEndAngle:(CGFloat)endAngle
+{
+    _endAngle = endAngle;
+    [self updateOvalPaths];
+}
+
+- (void)setClockwise:(BOOL)clockwise
+{
+    _clockwise = clockwise;
+    [self updateOvalPaths];
 }
 
 #pragma mark - CoreAnimation
@@ -122,6 +142,12 @@
 
 #pragma mark - Internals
 
+- (void)updateOvalPaths
+{
+    self.progressOvalLayer.path = [self progressOvalLayerPath];
+    self.backgroundOvalLayer.path = [self backgroundOvalLayerPath];
+}
+
 - (CAShapeLayer *)backgroundOvalLayer
 {
     if (!_backgroundOvalLayer) {
@@ -142,9 +168,9 @@
 - (CGPathRef)backgroundOvalLayerPath
 {
     return [[self class] ovalPathInRect:CGRectInset(self.bounds, self.thickness / 2.f, self.thickness / 2.f)
-                             startAngle:270
-                               endAngle:-90
-                              clockwise:NO].CGPath;
+                             startAngle:self.endAngle
+                               endAngle:self.startAngle
+                              clockwise:!self.clockwise].CGPath;
 }
 
 - (CAShapeLayer *)progressOvalLayer
@@ -167,9 +193,9 @@
 - (CGPathRef)progressOvalLayerPath
 {
     return [[self class] ovalPathInRect:CGRectInset(self.bounds, self.thickness / 2.f, self.thickness / 2.f)
-                             startAngle:-90
-                               endAngle:270
-                              clockwise:YES].CGPath;
+                             startAngle:self.startAngle
+                               endAngle:self.endAngle
+                              clockwise:self.clockwise].CGPath;
 }
 
 + (UIBezierPath *)ovalPathInRect:(CGRect)rect startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle clockwise:(BOOL)clockwise
