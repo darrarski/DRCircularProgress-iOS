@@ -42,6 +42,15 @@
     [self backgroundOvalLayer];
 }
 
+- (void)layoutSublayersOfLayer:(CALayer *)layer
+{
+    [super layoutSublayersOfLayer:layer];
+    if ([layer isEqual:self.layer]) {
+        self.progressOvalLayer.path = [self progressOvalLayerPath];
+        self.backgroundOvalLayer.path = [self backgroundOvalLayerPath];
+    }
+}
+
 #pragma mark - Public properties
 
 - (void)setProgressValue:(CGFloat)progressValue
@@ -121,16 +130,21 @@
         layer.fillColor = nil;
         layer.strokeColor = self.alternativeColor.CGColor;
         layer.lineWidth = self.thickness;
-        layer.path = [[self class] ovalPathInRect:CGRectInset(self.bounds, self.thickness / 2.f, self.thickness / 2.f)
-                                       startAngle:270
-                                         endAngle:-90
-                                        clockwise:NO].CGPath;
+        layer.path = [self backgroundOvalLayerPath];
         layer.strokeStart = 0;
         layer.strokeEnd = [[self class] backgroundOvalStrokeEndForProgress:self.progressValue];
         [self.layer addSublayer:layer];
         _backgroundOvalLayer = layer;
     }
     return _backgroundOvalLayer;
+}
+
+- (CGPathRef)backgroundOvalLayerPath
+{
+    return [[self class] ovalPathInRect:CGRectInset(self.bounds, self.thickness / 2.f, self.thickness / 2.f)
+                             startAngle:270
+                               endAngle:-90
+                              clockwise:NO].CGPath;
 }
 
 - (CAShapeLayer *)progressOvalLayer
@@ -141,16 +155,21 @@
         layer.fillColor = nil;
         layer.strokeColor = self.progressColor.CGColor;
         layer.lineWidth = self.thickness;
-        layer.path = [[self class] ovalPathInRect:CGRectInset(self.bounds, self.thickness / 2.f, self.thickness / 2.f)
-                                       startAngle:-90
-                                         endAngle:270
-                                        clockwise:YES].CGPath;
+        layer.path = [self progressOvalLayerPath];
         layer.strokeStart = 0;
         layer.strokeEnd = [[self class] progressOvalStokeEndForProgress:self.progressValue];
         [self.layer addSublayer:layer];
         _progressOvalLayer = layer;
     }
     return _progressOvalLayer;
+}
+
+- (CGPathRef)progressOvalLayerPath
+{
+    return [[self class] ovalPathInRect:CGRectInset(self.bounds, self.thickness / 2.f, self.thickness / 2.f)
+                             startAngle:-90
+                               endAngle:270
+                              clockwise:YES].CGPath;
 }
 
 + (UIBezierPath *)ovalPathInRect:(CGRect)rect startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle clockwise:(BOOL)clockwise
