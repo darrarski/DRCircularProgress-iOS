@@ -34,13 +34,17 @@
                          self.progressView.progressValue = 1.f;
                      }
                      completion:^(BOOL finished1) {
-                         [UIView animateWithDuration:3
-                                          animations:^{
-                                              self.progressView.progressValue = 0.f;
-                                          }
-                                          completion:^(BOOL finished2) {
-                                              [self animateProgress];
-                                          }];
+                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                             [UIView animateWithDuration:3
+                                              animations:^{
+                                                  self.progressView.progressValue = 0.f;
+                                              }
+                                              completion:^(BOOL finished2) {
+                                                  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                                                      [self animateProgress];
+                                                  });
+                                              }];
+                         });
                      }];
 }
 
