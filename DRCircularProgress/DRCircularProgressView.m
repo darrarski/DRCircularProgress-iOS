@@ -214,6 +214,8 @@
 
 + (UIBezierPath *)ovalPathInRect:(CGRect)rect startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle clockwise:(BOOL)clockwise
 {
+    if (CGSizeEqualToSize(rect.size, CGSizeZero)) return nil;
+
     BOOL isCircle = rect.size.width == rect.size.height;
     UIBezierPath *ovalPath = [UIBezierPath bezierPath];
     [ovalPath addArcWithCenter:isCircle ? CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect)) : CGPointZero
