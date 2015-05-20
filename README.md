@@ -48,6 +48,10 @@ Check out included example project.
 
 ## Changelog
 
+##### v1.0.1
+
+> - Fixed: crash when size is set to `CGRectZero`
+
 ##### v1.0.0
 
 > - Allows to configure start/end angle, counter-/clockwise progress direction
