@@ -48,6 +48,10 @@ Check out included example project.
 
 ## Changelog
 
+##### v1.0.3
+
+> - Updated layers animation logic, to make setting progress without animation possible
+
 ##### v1.0.2
 
 > - Fixed: preserving state after animating progress
