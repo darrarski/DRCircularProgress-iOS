@@ -48,6 +48,10 @@ Check out included example project.
 
 ## Changelog
 
+##### v1.0.2
+
+> - Fixed: preserving state after animating progress
+
 ##### v1.0.1
 
 > - Fixed: crash when size is set to `CGRectZero`
