@@ -130,6 +130,7 @@
                 animation.fillMode = action.fillMode;
                 animation.timingFunction = action.timingFunction;
                 animation.delegate = action.delegate;
+                animation.removedOnCompletion = NO;
             }
 
             [self.progressOvalLayer addAnimation:progressOvalAnimation forKey:@"strokeEnd"];
