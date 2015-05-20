@@ -106,7 +106,13 @@
 - (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)key
 {
     if ([key isEqualToString:NSStringFromSelector(@selector(progressValue))]) {
-        CAAnimation *action = (CAAnimation *)[self actionForLayer:layer forKey:@"backgroundColor"];
+        [CATransaction begin];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+        self.progressOvalLayer.strokeEnd = [[self class] progressOvalStokeEndForProgress:self.progressValue];
+        self.backgroundOvalLayer.strokeEnd = [[self class] backgroundOvalStrokeEndForProgress:self.progressValue];
+        [CATransaction commit];
+
+        CAAnimation *action = (CAAnimation *)[self actionForLayer:layer forKey:NSStringFromSelector(@selector(backgroundColor))];
         if (![action isKindOfClass:[NSNull class]]) {
             CGFloat currentProgress = [[layer valueForKey:NSStringFromSelector(@selector(progressValue))] floatValue];
             CGFloat targetProgress = self.progressValue;
@@ -130,15 +136,11 @@
                 animation.fillMode = action.fillMode;
                 animation.timingFunction = action.timingFunction;
                 animation.delegate = action.delegate;
-                animation.removedOnCompletion = NO;
+                animation.removedOnCompletion = action.removedOnCompletion;
             }
 
             [self.progressOvalLayer addAnimation:progressOvalAnimation forKey:@"strokeEnd"];
             [self.backgroundOvalLayer addAnimation:backgroundOvalAnimation forKey:@"strokeEnd"];
-        }
-        else {
-            self.progressOvalLayer.strokeEnd = [[self class] progressOvalStokeEndForProgress:self.progressValue];
-            self.backgroundOvalLayer.strokeEnd = [[self class] backgroundOvalStrokeEndForProgress:self.progressValue];
         }
     }
     return [super actionForLayer:layer forKey:key];
