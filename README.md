@@ -30,15 +30,17 @@ DRCircularProgressView *progressView = ...
 
 You can integrate `DRCircularProgress` with your project using Cocoapods. To do so, you will need to add one of the following lines to your Podfile:
 
-For most recent or development version:
+For stable release (recommended):
 
-    pod 'DRCircularProgress', :git => 'https://github.com/darrarski/DRCircularProgress-iOS.git'
+    pod 'DRCircularProgress', '~> 1.0.3'
 
-For specific version:
+Which creates dependency for version `>= 1.0.3` and `< 1.1`
+
+For most recent or exact development version (not recommended on production):
 
     pod 'DRCircularProgress', :git => 'https://github.com/darrarski/DRCircularProgress-iOS.git', :tag => 'VERSION_TAG'
 
-Where `VERSION_TAG` you should put tag name for given version (ex. "v1.0.0"). It is recommended to set version explicity instead of using most recent version, as backward compatibility is not warranted.
+Where `VERSION_TAG` you should put tag name for given version (ex. "v1.0.3"). It is recommended to set version explicity instead of using most recent version, as backward compatibility is not warranted.
 
 You can also download zip archive of given release from [releases page](https://github.com/darrarski/DRCircularProgress-iOS/releases).
 
