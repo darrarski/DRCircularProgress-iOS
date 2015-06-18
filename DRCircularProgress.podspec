@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://github.com/darrarski/DRCircularProgress-iOS'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { 'Dariusz Rybicki' => 'darrarski@gmail.com' }
-  s.source       = { :git => 'https://github.com/darrarski/DRCircularProgress-iOS', :tag => 'v1.0.3' }
+  s.source       = { :git => 'https://github.com/darrarski/DRCircularProgress-iOS.git', :tag => 'v1.0.3' }
   s.platform     = :ios
   s.ios.deployment_target = "7.0"
   s.source_files = 'DRCircularProgress'
